@@ -43,55 +43,47 @@
 
 <script>
 import RecipeCard from '../components/RecipeCard.vue'
+import { ref, computed } from 'vue'
+import { useSearch } from '../composables/search'
 
 export default {
   components: {
     RecipeCard,
   },
-  data() {
-    return {
-      currentQuery: '',
-      query: '',
-      meals: [],
-      searchFilter: '',
-    }
-  },
-  methods: {
-    search() {
-      if (this.query.trim().length == 0) {
-        this.meals = []
-        this.currentQuery = ''
-        return
+  setup() {
+    const { currentQuery, query, meals, search } = useSearch()
+
+    const searchFilter = ref('')
+
+    const filteredMeals = computed(() => {
+      if (searchFilter.value.length == 0) {
+        return meals.value
       }
-      fetch(
-        'https://www.themealdb.com/api/json/v1/1/search.php?s=' + this.query
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          this.meals = data.meals
-          this.currentQuery = this.query
-        })
-    },
-  },
-  computed: {
-    searchFilterOptions() {
+
+      return meals.value.filter((meal) => {
+        return meal.strCategory && meal.strCategory == searchFilter.value
+      })
+    })
+
+    const searchFilterOptions = computed(() => {
       let categories = []
-      this.meals.forEach((meal) => {
+      meals.value.forEach((meal) => {
         if (meal.strCategory && categories.indexOf(meal.strCategory) == -1) {
           categories.push(meal.strCategory)
         }
       })
       return categories
-    },
-    filteredMeals() {
-      if (this.searchFilter.length == 0) {
-        return this.meals
-      }
+    })
 
-      return this.meals.filter((meal) => {
-        return meal.strCategory && meal.strCategory == this.searchFilter
-      })
-    },
+    return {
+      currentQuery,
+      filteredMeals,
+      meals,
+      query,
+      search,
+      searchFilter,
+      searchFilterOptions,
+    }
   },
 }
 </script>
