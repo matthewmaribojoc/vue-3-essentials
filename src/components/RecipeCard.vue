@@ -47,7 +47,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .recipe-card {
   width: 300px;
   background-color: #fafafa;
@@ -80,13 +80,15 @@ export default {
   color: #2c3e50;
 }
 
-.recipe-card__info ul {
+.recipe-card__info ul,
+.recipe-tags {
   list-style: none;
   padding: 0;
   display: flex;
 }
 
-.recipe-card__info ul li {
+.recipe-card__info ul li,
+.recipe-tags li {
   background-color: #ddd;
   margin-right: 10px;
   padding: 5px;
