@@ -1,6 +1,6 @@
 <template>
   <Header title="my recipe" />
-  <router-view />
+  <router-view :key="$route.fullPath" />
 </template>
 
 <script setup>
