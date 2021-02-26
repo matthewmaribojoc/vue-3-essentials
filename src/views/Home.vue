@@ -14,18 +14,27 @@
       <div class="results-header" v-if="currentQuery.length > 0">
         <p>{{ meals.length }} results for {{ currentQuery }}</p>
       </div>
-
-      <ul>
-        <li v-for="meal in meals" :key="meal.idMeal">
-          {{ meal.strMeal }}
-        </li>
-      </ul>
+      <div class="results-cards">
+        <recipe-card
+          v-for="meal in meals"
+          :key="meal.idMeal"
+          :recipe-name="meal.strMeal"
+          :category="meal.strCategory"
+          :thumbnail="meal.strMealThumb"
+          :tags="meal.strTags ? meal.strTags.split(',') : []"
+        />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import RecipeCard from '../components/RecipeCard.vue'
+
 export default {
+  components: {
+    RecipeCard,
+  },
   data() {
     return {
       currentQuery: '',
@@ -88,5 +97,11 @@ export default {
 
 .results-header {
   padding: 20px 0;
+}
+
+.results-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 </style>
