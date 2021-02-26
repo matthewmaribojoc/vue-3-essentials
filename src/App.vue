@@ -1,12 +1,13 @@
 <template>
   <Header title="my recipe" />
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="My Vue 3 Project" />
+  <Home />
 </template>
 
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
 import Header from './components/Header.vue'
+import Home from './views/Home.vue'
+
 // This starter template is using Vue 3 experimental <script setup> SFCs
 // Check out https://github.com/vuejs/rfcs/blob/script-setup-2/active-rfcs/0000-script-setup.md
 </script>
