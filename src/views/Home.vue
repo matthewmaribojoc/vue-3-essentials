@@ -13,10 +13,23 @@
     <div class="results">
       <div class="results-header" v-if="currentQuery.length > 0">
         <p>{{ meals.length }} results for {{ currentQuery }}</p>
+        <p>
+          Filter results
+          <select v-model="searchFilter">
+            <option value="">View All</option>
+            <option
+              v-for="category in searchFilterOptions"
+              :key="category"
+              :value="category"
+            >
+              {{ category }}
+            </option>
+          </select>
+        </p>
       </div>
       <div class="results-cards">
         <recipe-card
-          v-for="meal in meals"
+          v-for="meal in filteredMeals"
           :key="meal.idMeal"
           :recipe-name="meal.strMeal"
           :category="meal.strCategory"
@@ -40,6 +53,7 @@ export default {
       currentQuery: '',
       query: '',
       meals: [],
+      searchFilter: '',
     }
   },
   methods: {
@@ -57,6 +71,26 @@ export default {
           this.meals = data.meals
           this.currentQuery = this.query
         })
+    },
+  },
+  computed: {
+    searchFilterOptions() {
+      let categories = []
+      this.meals.forEach((meal) => {
+        if (meal.strCategory && categories.indexOf(meal.strCategory) == -1) {
+          categories.push(meal.strCategory)
+        }
+      })
+      return categories
+    },
+    filteredMeals() {
+      if (this.searchFilter.length == 0) {
+        return this.meals
+      }
+
+      return this.meals.filter((meal) => {
+        return meal.strCategory && meal.strCategory == this.searchFilter
+      })
     },
   },
 }
