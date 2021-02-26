@@ -10,6 +10,17 @@
       />
       <button @click="search">Search</button>
     </div>
+    <div class="results">
+      <div class="results-header" v-if="currentQuery.length > 0">
+        <p>{{ meals.length }} results for {{ currentQuery }}</p>
+      </div>
+
+      <ul>
+        <li v-for="meal in meals" :key="meal.idMeal">
+          {{ meal.strMeal }}
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -17,12 +28,26 @@
 export default {
   data() {
     return {
+      currentQuery: '',
       query: '',
+      meals: [],
     }
   },
   methods: {
     search() {
-      console.log(this.query)
+      if (this.query.trim().length == 0) {
+        this.meals = []
+        this.currentQuery = ''
+        return
+      }
+      fetch(
+        'https://www.themealdb.com/api/json/v1/1/search.php?s=' + this.query
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          this.meals = data.meals
+          this.currentQuery = this.query
+        })
     },
   },
 }
@@ -59,5 +84,9 @@ export default {
   font-size: 1.5em;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.results-header {
+  padding: 20px 0;
 }
 </style>
