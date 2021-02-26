@@ -1,6 +1,6 @@
 <template>
   <Header title="my recipe" />
-  <Home />
+  <router-view />
 </template>
 
 <script setup>

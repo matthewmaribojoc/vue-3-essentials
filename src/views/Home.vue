@@ -31,6 +31,7 @@
         <recipe-card
           v-for="meal in filteredMeals"
           :key="meal.idMeal"
+          :id="meal.idMeal"
           :recipe-name="meal.strMeal"
           :category="meal.strCategory"
           :thumbnail="meal.strMealThumb"

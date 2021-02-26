@@ -1,9 +1,13 @@
 <template>
   <div class="recipe-card">
-    <img :src="thumbnail" />
+    <router-link :to="{ path: '/recipe', query: { id } }">
+      <img :src="thumbnail" />
+    </router-link>
     <div class="recipe-card__info">
       <h5>{{ category }}</h5>
-      <h3>{{ recipeName }}</h3>
+      <router-link :to="{ path: '/recipe', query: { id } }">
+        <h3>{{ recipeName }}</h3>
+      </router-link>
       <ul>
         <li v-for="tag in tags" :key="tag">
           {{ tag }}
@@ -16,6 +20,10 @@
 <script>
 export default {
   props: {
+    id: {
+      type: String,
+      required: true,
+    },
     recipeName: {
       type: String,
       required: true,
@@ -84,5 +92,9 @@ export default {
   padding: 5px;
   border-radius: 5px;
   font-size: 0.8em;
+}
+
+.recipe-card a {
+  text-decoration: none;
 }
 </style>

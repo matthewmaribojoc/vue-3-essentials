@@ -5,7 +5,7 @@
       <h2>{{ formattedTitle }}</h2>
     </div>
     <nav>
-      <a href="#"> Home </a>
+      <router-link to="/"> Home </router-link>
       <a href="#" @click="loadRandomRecipe"> Random Recipe </a>
     </nav>
   </div>
@@ -22,7 +22,17 @@ export default {
   methods: {
     loadRandomRecipe(evt) {
       evt.preventDefault()
-      console.log('Load Random Recipe!')
+      fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+        .then((response) => response.json())
+        .then((data) => {
+          // /recipe?id=RECIPE_ID
+          this.$router.push({
+            path: '/recipe',
+            query: {
+              id: data.meals[0].idMeal,
+            },
+          })
+        })
     },
   },
   computed: {
