@@ -1,11 +1,16 @@
 <template>
   <div class="recipe" v-if="meal">
+    <youtube-popup
+      v-if="popupOpen"
+      @close="popupOpen = false"
+      :videoID="meal.strYoutube.split('?v=')[1]"
+    />
     <div class="recipe-header">
       <img :src="meal.strMealThumb" />
       <div class="recipe-header__text">
         <h3>{{ meal.strCategory }}</h3>
         <h1>{{ meal.strMeal }}</h1>
-        <button>Watch on Youtube</button>
+        <button @click="popupOpen = true">Watch on Youtube</button>
         <ul class="recipe-tags" v-if="tags">
           <li v-for="tag in tags" :key="tag">
             {{ tag }}
@@ -38,12 +43,18 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, computed } from 'vue'
 
+import YoutubePopup from '../components/YoutubePopup.vue'
 export default {
+  components: {
+    YoutubePopup,
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
 
     const id = route.query.id
+
+    const popupOpen = ref(false)
 
     const meal = ref(null)
     const tags = computed(() => {
@@ -82,6 +93,7 @@ export default {
       directions,
       ingredients,
       meal,
+      popupOpen,
       tags,
     }
   },
