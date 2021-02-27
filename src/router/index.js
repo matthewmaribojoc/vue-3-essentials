@@ -8,10 +8,16 @@ const router = createRouter({
     {
       path: '/',
       component: Home,
+      meta: {
+        key: () => 'default',
+      },
     },
     {
       path: '/recipe',
       component: Recipe,
+      meta: {
+        key: (route) => route.fullPath,
+      },
     },
   ],
 })

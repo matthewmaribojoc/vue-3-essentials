@@ -1,6 +1,6 @@
 <template>
   <Header title="my recipe" />
-  <router-view :key="$route.fullPath" />
+  <router-view :key="$route.meta.key ? $route.meta.key($route) : 'default'" />
 </template>
 
 <script setup>
