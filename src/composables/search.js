@@ -17,6 +17,8 @@ export function useSearch() {
     let query = state.query
 
     autocomplete = setTimeout(() => {
+      // run search to get meals based off the query
+      // display in our template
       console.log(query)
     }, 1000)
   })
