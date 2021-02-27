@@ -2,7 +2,7 @@
   <div>
     <teleport to="#teleport-target">
       <div class="popup">
-        <div class="popup-video">
+        <div class="popup-video" ref="video">
           <div class="close" @click="closePopup">X</div>
           <iframe
             width="560"
@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { ref } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 export default {
   props: {
     videoID: {
@@ -26,12 +28,16 @@ export default {
     },
   },
   setup(props, context) {
+    const video = ref(null)
     const closePopup = () => {
       context.emit('close')
     }
 
+    onClickOutside(video, closePopup)
+
     return {
       closePopup,
+      video,
     }
   },
 }

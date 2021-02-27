@@ -7,6 +7,7 @@
         placeholder="Enter a recipe name"
         v-model="query"
         @keydown.enter="search"
+        ref="searchInput"
       />
       <button @click="search">Search</button>
     </div>
@@ -44,7 +45,7 @@
 
 <script>
 import RecipeCard from '../components/RecipeCard.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useSearch } from '../composables/search'
 
 export default {
@@ -55,6 +56,12 @@ export default {
     const { currentQuery, query, meals, search } = useSearch()
 
     const searchFilter = ref('')
+    const searchInput = ref(null)
+
+    onMounted(() => {
+      console.log(searchInput.value)
+      searchInput.value.focus()
+    })
 
     const filteredMeals = computed(() => {
       if (searchFilter.value.length == 0) {
@@ -84,6 +91,7 @@ export default {
       search,
       searchFilter,
       searchFilterOptions,
+      searchInput,
     }
   },
 }
