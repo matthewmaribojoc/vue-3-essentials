@@ -1,10 +1,17 @@
 <template>
   <div class="recipe" v-if="meal">
-    <youtube-popup
-      v-if="popupOpen"
-      @close="popupOpen = false"
-      :videoID="meal.strYoutube.split('?v=')[1]"
-    />
+    <teleport to="#teleport-target">
+      <transition
+        enter-active-class="animate__animated animate__fadeInDown"
+        leave-active-class="animate__animated animate__fadeOutUp"
+      >
+        <youtube-popup
+          v-if="popupOpen"
+          @close="popupOpen = false"
+          :videoID="meal.strYoutube.split('?v=')[1]"
+        />
+      </transition>
+    </teleport>
     <div class="recipe-header">
       <img :src="meal.strMealThumb" />
       <div class="recipe-header__text">
@@ -110,6 +117,7 @@ export default {
   background-color: #fff;
   border-radius: 10px;
   text-align: left;
+  position: relative;
 }
 
 .recipe-header {
@@ -156,5 +164,15 @@ export default {
 
 .directions {
   width: 70%;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: 0.5s opacity linear;
 }
 </style>

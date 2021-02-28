@@ -1,20 +1,16 @@
 <template>
-  <div>
-    <teleport to="#teleport-target">
-      <div class="popup">
-        <div class="popup-content" ref="content">
-          <div class="close" @click="closePopup">X</div>
-          <slot> Popup Window Fallback </slot>
-          <!-- <iframe
+  <div class="popup" v-if="true">
+    <div class="popup-content" ref="content">
+      <div class="close" @click="closePopup">X</div>
+      <slot> Popup Window Fallback </slot>
+      <!-- <iframe
             width="560"
             height="315"
             frameborder="0"
             allowfullscreen
             :src="'https://youtube.com/embed/' + contentID"
           /> -->
-        </div>
-      </div>
-    </teleport>
+    </div>
   </div>
 </template>
 
