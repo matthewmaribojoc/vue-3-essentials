@@ -36,8 +36,10 @@ export function useSearch() {
     fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=' + state.query)
       .then((response) => response.json())
       .then((data) => {
-        state.meals = data.meals
+        console.log(data)
         state.currentQuery = state.query
+        state.meals = data.meals
+
         router.push('/?q=' + state.query)
       })
   }

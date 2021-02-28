@@ -3,7 +3,7 @@ import Home from '../views/Home.vue'
 import Recipe from '../views/Recipe.vue'
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/vue-3-essentials-demo/'),
   routes: [
     {
       path: '/',
