@@ -13,20 +13,23 @@
     </div>
     <div class="results">
       <div class="results-header" v-if="currentQuery.length > 0">
-        <p>{{ meals.length }} results for {{ currentQuery }}</p>
-        <p>
-          Filter results
-          <select v-model="searchFilter">
-            <option value="">View All</option>
-            <option
-              v-for="category in searchFilterOptions"
-              :key="category"
-              :value="category"
-            >
-              {{ category }}
-            </option>
-          </select>
-        </p>
+        <div v-if="meals && meals.length > 0">
+          <p>{{ meals.length }} results for {{ currentQuery }}</p>
+          <p>
+            Filter results
+            <select v-model="searchFilter">
+              <option value="">View All</option>
+              <option
+                v-for="category in searchFilterOptions"
+                :key="category"
+                :value="category"
+              >
+                {{ category }}
+              </option>
+            </select>
+          </p>
+        </div>
+        <div v-else>No results found for {{ currentQuery }}</div>
       </div>
       <div class="results-cards">
         <recipe-card
